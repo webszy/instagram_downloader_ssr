@@ -3,48 +3,99 @@
     <section class="top">
       <h1>{{platform}}</h1>
       <h2>Media Download</h2>
-      <el-input v-model="inputVal" placeholder="username/tag or URL" @keydown.enter="goSearching">
-        <button slot="suffix" class="search" @click="goSearching">search</button>
-      </el-input>
-      <img src="../assets/images/instagram_image@2x.png" >
-      <img src="../assets/images/instagram_image@2x.png" >
+      <el-autocomplete  
+        v-model="inputVal" 
+        placeholder="username or post URL" 
+        :trigger-on-focus="false"
+        @keydown.enter="goSearching"
+        :fetch-suggestions="querySearchAsync"
+        @select="handleSelect"
+        :popper-append-to-body="false"
+      >
+        <button slot="suffix" class="search" @click="goNextPage">search</button>
+         <template slot-scope="{ item }">
+           <div class="afterQuery">
+             <img :src="item.src" alt="User Avatar">
+             <p>{{ item.name }}</p>
+           </div>         
+        </template>
+      </el-autocomplete >
+      <section class="select"> 
+        <el-radio v-model="platform" label="Instagram">Instagram</el-radio>
+      </section>
+      <img class="leftbg" src="../assets/images/instagram_image@2x.png" >
+      <img class="rightbg" src="../assets/images/instagram_image@2x.png" >
     </section>
-   
     <article class="card">
-      <img src="../assets/images/advantages.png">
-      <h3>Advantages</h3>
-      <p>No need to log in, truly anonymous, no need to login, no private data collected.One button smart, simple, easy and convenient.</p>
-    </article>
-     <article class="card">
       <img src="../assets/images/use.png">
       <h3>How to use</h3>
       <p>Enter your username or post link and then click the search button to download the video, image and story data.</p>
     </article>
     <article class="card">
+      <img src="../assets/images/advantages.png">
+      <h3>Advantages</h3>
+      <p>No need to log in, truly anonymous, no need to login, no private data collected.One button smart, simple, easy and convenient.</p>
+    </article>
+    
+    <article class="card">
       <img src="../assets/images/privacy.png">
       <h3>Privacy Policy</h3>
       <p>We don't affiliate with Instagram or host any of the Instagram's Stories on this website.All rights belong to the each account owners.</p>
     </article>
+    <s-footer/>
   </div>
 </template>
 
 <script>
-
+import sFooter from '../components/footer'
+import {
+  getInsSearchResult
+}from '../utils/request'
 export default {
   name:'HomePage',
   components: {
-    
+    sFooter
   },
   data(){
     return{
-      platform:'instagram',
-      inputVal:''
+      platform:'Instagram',
+      inputVal:'',
+      routerPath:{
+        instagram:'insta'
+      }
     }
     
   },
   methods:{
-    goSearching(){
-      console.log(this.inputVal)
+    goNextPage(){
+      
+      if(this.inputVal.startsWith('https:')){
+
+      }else{
+        this.$router.push('/insta/')
+      }
+    },
+    querySearchAsync(queryString,cb){
+      if(queryString.startsWith('http:')||queryString.startsWith('https:')){
+        return
+      }
+     getInsSearchResult(this.inputVal)
+     .then(res=>{
+     console.log("TCL: querySearchAsync -> res", res)
+     let result=[]
+
+      if(res.status==='ok'){
+        for(let i=0;i<10;i++){
+          let k=res.users[i],obj={name:k.user.username,src:k.user.profile_pic_url}
+          result.push(obj)
+        }
+        cb(result)
+      }
+     })
+    },
+    handleSelect(item){
+      console.log("TCL: handleSelect -> item", item)
+      this.inputVal=item.name
     }
   }
 }
@@ -84,6 +135,11 @@ export default {
 .home .top h2{
   color:#00FFFA;
 }
+.home .el-autocomplete{
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
 .home .el-input{
   width: 41.67%;
   height: 100px;
@@ -119,6 +175,44 @@ export default {
   width: 100%;
   height: 100%;
 }
+.home .top  .afterQuery{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #efefef;
+  position: static;
+}
+.home .top  .afterQuery img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+.home .top  .afterQuery p{
+  font-size: 18px;
+  font-family: 'Lalezar', cursive;
+  color:#AEAEAE;
+}
+.home .select{
+  margin-top: 60px;
+  height: 35px;
+}
+.home .select .el-radio__label{
+  color:#fff;
+  font-size:22px;
+  font-family: 'Lalezar', cursive;
+  line-height:35px;
+}
+.home .select .el-radio__inner{
+  width: 16px;
+  height: 16px;
+  border-color:#fff;
+  background-color: transparent;
+}
+.home .select  .el-radio__inner::after{
+  width: 6px;
+  height: 6px;
+}
 .home .search{
   display: block;
   width: 100%;
@@ -131,7 +225,8 @@ export default {
   font-weight:400;
   color:#fff;
 }
-.home .top img{
+.home .top .leftbg,
+.home .top .rightbg{
   display: block;
   width: 380px;
   height: 380px;
@@ -140,7 +235,7 @@ export default {
   bottom: 12px;
   transform: rotateZ(5deg);
 }
-.home .top img:last-of-type{
+.home .top .rightbg{
   right: 80px;
   bottom: 12px;
   left: auto;
@@ -163,12 +258,12 @@ export default {
   left: 260px;
   top:741px;
 }
-.home .card:nth-child(2){
+.home .card:nth-of-type(2){
   left: 50%;
   top:805px;
   transform: translateX(-50%);
 }
-.home .card:last-child{
+.home .card:last-of-type{
   left: auto;
   right: 258px;
 }
@@ -188,11 +283,11 @@ export default {
   line-height:56px;
 }
 .home .card p{
-width:88.1%;
-font-size:22px;
-font-family: Arial, Helvetica, sans-serif;
-color:rgba(94,89,118,1);
-line-height:30px;
+  width:88.1%;
+  font-size:22px;
+  font-family: Arial, Helvetica, sans-serif;
+  color:rgba(94,89,118,1);
+  line-height:30px;
 }
 
 </style>
