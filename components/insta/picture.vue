@@ -8,6 +8,10 @@
               <i class="el-icon-picture-outline"></i>
             </div>
     </el-image>
+    <div class="downloadLayer">
+      <p>{{title}}</p>
+      <button class="downloadIcon"></button>
+    </div>
   </div>
 </template>
 
@@ -18,6 +22,10 @@ export default {
 name:'PictureItem',
 props:{
   src:{
+    type:String,
+    required:true
+  },
+  title:{
     type:String,
     required:true
   }
@@ -32,9 +40,13 @@ computed:{}
 </script>
 <style>
 .picture{
-  width: 240px;
-  height: 240px;
+  width: 300px;
+  height: 300px;
+  margin-bottom:60px;
+  position: relative;
+  overflow: hidden;
 }
+
 .picture .el-image {
   width:100%;
   height: 100%;
