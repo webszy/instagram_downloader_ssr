@@ -4,13 +4,10 @@ import {getShareData,getQueryHashByScript,getProfilePageContainerURL} from './to
 export const Service = axios.create({
     timeout: 7000, // 请求超时时间
     method:'get',
-    proxy:{
-    host: '127.0.0.1',
-    port: 7890
-  },
-  headers:{
-    'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'
-  }
+    // proxy:{
+    //   host: '127.0.0.1',
+    //   port: 7890
+    // }
 })
 
 const InsBaseProfileURL='https://www.instagram.com/',
