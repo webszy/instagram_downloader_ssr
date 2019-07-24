@@ -5,7 +5,6 @@ import {getShareData,getQueryHashByScript,getProfilePageContainerURL} from './to
 const Service = axios.create({
     timeout: 7000, // 请求超时时间
     method:'get',
-
 })
 const InsBaseProfileURL='https://www.instagram.com/',
 InsSearchURL='https://www.instagram.com/web/search/topsearch/?context=blended&query='

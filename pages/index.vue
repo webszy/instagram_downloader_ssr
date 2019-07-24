@@ -7,7 +7,6 @@
         v-model="inputVal" 
         placeholder="username or post URL" 
         :trigger-on-focus="false"
-        @keydown.enter="goSearching"
         :fetch-suggestions="querySearchAsync"
         @select="handleSelect"
         :popper-append-to-body="false"
@@ -35,8 +34,7 @@
       <img src="../assets/images/advantages.png">
       <h3>Advantages</h3>
       <p>No need to log in, truly anonymous, no need to login, no private data collected.One button smart, simple, easy and convenient.</p>
-    </article>
-    
+    </article>  
     <article class="card">
       <img src="../assets/images/privacy.png">
       <h3>Privacy Policy</h3>
@@ -109,6 +107,7 @@ export default {
 .home{
  width: 100%;
  height: 100%;
+
 }
 .home .top{
   width: 100%;
