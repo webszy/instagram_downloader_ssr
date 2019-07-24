@@ -19,7 +19,7 @@
     <section>
       <component 
       :is=componentName
-      :userMedia="{}"
+      :userMedia="userMedias"
       ></component>
     </section>
   </div>
@@ -29,42 +29,79 @@
 <script>
 import {
   getUserBaseInfo,
-  Service
+  getSingleMediaInfo
 } from '@/utils/request'
 import userPostGellay from '@/components/insta/userPostGellay'
 import { mapMutations,mapGetters } from 'vuex'
-
+import { Loading } from 'element-ui'
 export default {
   name:'DownInsUserPost',
   components:{userPostGellay},
   data(){
   return {
     username:this.$route.params.name || "NULL",
-    userPic:'',
+    userPic:require('@/assets/images/imagePlaceholder.png'),
     inputVal:'',
-    componentName:'userPostGellay'
+    componentName:'userPostGellay',
+    loadingItem:'',
+    userMedias:[]
     }
   },
- async asyncData({ store, params,$axios }){
-    let url='https://www.instagram.com/'+params.name+'/'
-    getUserBaseInfo(params.name)
-    .then(res=>{
-      console.log("TCL: Data -> res", res)
-      return store.commit('setProfile',res.data)
-    })
-    .catch(err=>{
-      console.log("TCL: Data -> err", err)
-      
-    })
-
-    
- },
+//   async fetch({ store, params }){
+//     let {data}= await getUserBaseInfo(params.name)
+//     return store.commit('setProfile',data)
+//  },
   mounted(){
-    
+    this.loadingItem=this.$loading.service({ fullscreen: true,lock:true,text:'Fetching the user Data' })
+    this.$nextTick(()=>{
+      this.getUserProfile()
+    })
   },
   methods:{
     ...mapMutations(['setProfile']),
-    goNextPage(){}
+    goNextPage(){},
+    getUserProfile(){
+      getUserBaseInfo(this.username)
+      .then(res=>{
+        console.log("TCL: getUserProfile -> res", res)
+        let data=res.data.entry_data.ProfilePage[0].graphql.user,userMedias=[]
+        this.userPic=data.profile_pic_url
+        for(let k of data.edge_owner_to_timeline_media.edges){
+          userMedias.push(k.node)
+        }
+        return this.getUserMediaDetail(userMedias) 
+      })
+    },
+    getUserMediaDetail(arr){
+      let ajaxArr=[],len=arr.length
+      for(let k of arr){
+        let p=getSingleMediaInfo(k.shortcode)
+        ajaxArr.push(p)
+        
+      }
+
+      Promise.all(ajaxArr)
+      .then(res=>{
+      console.log("TCL: getUserMediaDetail -> res", res)
+        for(let k of res){
+          let item=k.data.entry_data.PostPage[0].graphql.shortcode_media
+          for(let i=0;i<len;i++){
+            let userMediaItem=arr[i]
+            if(userMediaItem.shortcode===item.shortcode){
+              if(userMediaItem.is_video){
+                userMediaItem.video_url=item.video_url
+              }
+              userMediaItem.title=item.title||''
+              break
+            }
+          }
+        }
+      })
+      .finally(()=>{
+        this.userMedias=arr
+        this.loadingItem.close()
+      })
+    }
   },
   computed:{
     ...mapGetters(['profile'])
