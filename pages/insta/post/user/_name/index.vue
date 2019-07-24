@@ -16,7 +16,12 @@
       <button :style="componentName==='userStoryGellay'?'color:#fff;':'color:#6151AE;'" @click="componentName='userStoryGellay'">Stories</button>
       <i :style="componentName==='userStoryGellay'?'left:50%;':''" class="tab_bg"></i>
     </section>
-
+    <section>
+      <component 
+      :is=componentName
+      :userMedia="{}"
+      ></component>
+    </section>
   </div>
 </template>
 
@@ -25,14 +30,16 @@
 import {
   getUserBaseInfo
 } from '@/utils/request'
+import userPostGellay from '@/components/insta/userPostGellay'
 export default {
 name:'DownInsUserPost',
+components:{userPostGellay},
 data(){
 return {
   username:this.$route.params.name || "NULL",
   userPic:'https://scontent-hkg3-2.cdninstagram.com/vp/49e87078c63296b9f0f120fba424edf3/5DCD0D34/t51.2885-19/s150x150/65719865_469781647109356_4479842475334172672_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com',
   inputVal:'',
-  componentName:''
+  componentName:'userPostGellay'
   }
  },
  asyncData({ route, store, env, params, query, req, res, redirect, error}) {
@@ -173,8 +180,10 @@ text-align: center;
   font-family: 'Lalezar', cursive;
   font-weight:400;
   color:#fff;
-  line-height: 200%;
   background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 1;
 }
 .post .tab i{
