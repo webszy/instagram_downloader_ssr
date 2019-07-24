@@ -21,7 +21,12 @@
       :is=componentName
       :userMedia="userMedias"
       ></component>
+      <button class="loadMore" @click="loadMoreMedia" v-if="has_next_page">
+        <p>Load more</p>
+        <i></i>
+      </button>
     </section>
+    <s-footer/>
   </div>
 </template>
 
@@ -29,14 +34,17 @@
 <script>
 import {
   getUserBaseInfo,
-  getSingleMediaInfo
+  getSingleMediaInfo,
+  getQueryHash,
+  getNextPageData
 } from '@/utils/request'
 import userPostGellay from '@/components/insta/userPostGellay'
+import sFooter from '@/components/footer'
 import { mapMutations,mapGetters } from 'vuex'
 import { Loading } from 'element-ui'
 export default {
   name:'DownInsUserPost',
-  components:{userPostGellay},
+  components:{userPostGellay,sFooter},
   data(){
   return {
     username:this.$route.params.name || "NULL",
@@ -44,7 +52,11 @@ export default {
     inputVal:'',
     componentName:'userPostGellay',
     loadingItem:'',
-    userMedias:[]
+    userMedias:[],
+    end_cursor:'',
+    has_next_page:false,
+    jsFileURL:'',
+    userId:''
     }
   },
 //   async fetch({ store, params }){
@@ -52,7 +64,7 @@ export default {
 //     return store.commit('setProfile',data)
 //  },
   mounted(){
-    this.loadingItem=this.$loading.service({ fullscreen: true,lock:true,text:'Fetching the user Data' })
+    this.showLoading()
     this.$nextTick(()=>{
       this.getUserProfile()
     })
@@ -66,13 +78,18 @@ export default {
         console.log("TCL: getUserProfile -> res", res)
         let data=res.data.entry_data.ProfilePage[0].graphql.user,userMedias=[]
         this.userPic=data.profile_pic_url
+        this.end_cursor=data.edge_owner_to_timeline_media.page_info.end_cursor
+        this.has_next_page=data.edge_owner_to_timeline_media.page_info.has_next_page
+        this.userId=data.id
+        this.jsFileURL=res.jsFileURL
         for(let k of data.edge_owner_to_timeline_media.edges){
+          if(!k.node.title){k.node.title=''}
           userMedias.push(k.node)
         }
         return this.getUserMediaDetail(userMedias) 
       })
     },
-    getUserMediaDetail(arr){
+    getUserMediaDetail(arr,type){
       let ajaxArr=[],len=arr.length
       for(let k of arr){
         let p=getSingleMediaInfo(k.shortcode)
@@ -98,10 +115,47 @@ export default {
         }
       })
       .finally(()=>{
-        this.userMedias=arr
+        if(type==='concat'){
+          this.userMedias=this.userMedias.concat(arr)
+        }else{
+          this.userMedias=arr
+        }
+        
         this.loadingItem.close()
       })
-    }
+    },
+    showLoading(){
+      this.loadingItem=this.$loading.service({ fullscreen: true,lock:true,text:'Fetching the user Data' })
+    },
+    loadMoreMedia(){
+      if(this.componentName==='userPostGellay'){
+        return this.loadMorePost()
+      }else{
+        this.loadMoreStory()
+      }
+    },
+    loadMorePost(){
+      if(this.has_next_page){
+        
+        getQueryHash(this.jsFileURL)
+        .then(res=>{
+          return getNextPageData(this.userId,this.end_cursor,res[2])
+        })
+        .then(res=>{
+        console.log("TCL: loadMorePost -> res", res)
+          if(res.status==='ok'){
+            let data=res.data.user.edge_owner_to_timeline_media,arr=[]
+            this.end_cursor=data.page_info.end_cursor
+            this.has_next_page=data.page_info.has_next_page
+            for(let k of data.edges){
+              arr.push(k.node)
+            }
+            return this.getUserMediaDetail(arr,'concat')
+          }
+        })
+      }
+    },
+    loadMoreStory(){}
   },
   computed:{
     ...mapGetters(['profile'])
@@ -250,5 +304,34 @@ text-align: center;
   background:#6151AE;
   z-index: 0; 
   transition: all .3s ease-in-out;
+}
+.post .loadMore{
+  width:280px;
+  height:85px;
+  background:rgba(97,81,174,1);
+  border-radius:68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 80px;
+  margin-bottom: 388px;
+}
+.post .loadMore p{
+  width:159px;
+  height:27px;
+  font-size:24px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight:normal;
+  color:#fff;
+  margin-right: 14px;
+
+}
+.post .loadMore i{
+  display: block;
+  width:38px;
+  height:38px;
+  background: url('../../../../../assets/images/loading_more.png') no-repeat left top;
+  background-size: cover;
 }
 </style>
