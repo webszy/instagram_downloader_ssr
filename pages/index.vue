@@ -61,7 +61,7 @@ export default {
       platform:'Instagram',
       inputVal:'',
       routerPath:{
-        instagram:'insta'
+        Instagram:'insta'
       }
     }
     
@@ -72,7 +72,8 @@ export default {
       if(this.inputVal.startsWith('https:')){
 
       }else{
-        this.$router.push('/insta/')
+        let path='/'+this.routerPath[this.platform]
+        this.$router.push(path+'/post/user/'+this.inputVal)
       }
     },
     querySearchAsync(queryString,cb){
@@ -86,7 +87,9 @@ export default {
 
       if(res.status==='ok'){
         for(let i=0;i<10;i++){
-          let k=res.users[i],obj={name:k.user.username,src:k.user.profile_pic_url}
+          let k=res.users[i]
+          if(k===undefined){break}
+          let obj={name:k.user.username,src:k.user.profile_pic_url}
           result.push(obj)
         }
         cb(result)
