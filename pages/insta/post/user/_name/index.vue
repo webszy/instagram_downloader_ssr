@@ -59,15 +59,18 @@ export default {
     userId:''
     }
   },
-//   async fetch({ store, params }){
-//     let {data}= await getUserBaseInfo(params.name)
-//     return store.commit('setProfile',data)
-//  },
+  async fetch({ store, params,$axios }){
+    // let {data}= await getUserBaseInfo(params.name)
+    // return store.commit('setProfile',data)
+    let res = await $axios.get('http://127.0.0.1:3000/data')
+    console.log("TCL: fetch -> res", res)
+    
+ },
   mounted(){
-    this.showLoading()
-    this.$nextTick(()=>{
-      this.getUserProfile()
-    })
+    // this.showLoading()
+    // this.$nextTick(()=>{
+    //   this.getUserProfile()
+    // })
   },
   methods:{
     ...mapMutations(['setProfile']),
