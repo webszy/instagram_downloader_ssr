@@ -1,27 +1,20 @@
 <template>
   <div class='postGellay'>
-     <el-image 
-          v-for="(item,i) in userMedia"
-          :key="i"
-          :src="getMediaSrc(item)"
-          @click="$emit('chooseLikeMedia',item,i)"
-          :class="choosedLikeIndex===i?'likeLayer':''"
-          >
-            <div slot="placeholder" class="image-slot">
-              <i class="el-icon-loading"></i>
-            </div>
-            <div slot="error" class="image-slot">
-              <i class="el-icon-picture-outline"></i>
-            </div>
-      </el-image>
+   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
+   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
+   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
+   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
+   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
+
   </div>
 </template>
 
 
 <script>
-
+import pictureItem from './picture'
 export default {
 name:'userPostGellay',
+components:{pictureItem},
 data(){
 return {
 
@@ -50,17 +43,17 @@ computed:{}
 .postGellay{
   width: 100%;
   box-sizing: border-box;
-  padding: 0 260px;
+  padding: 0 13.67%;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  padding-top: 52px;
 }
-.postGellay .el-image:nth-child(even){
-  margin-right: 
-}
-.el-image .image-slot .el-icon-loading{
-  font-size: 60px;
-  color:#6151AE;
+.postGellay .picture{
+  margin-right: 49px;
 }
 
+.postGellay .picture:nth-child(5n){
+  margin-right: 0;
+}
 </style>
