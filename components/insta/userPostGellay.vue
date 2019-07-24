@@ -50,7 +50,7 @@ computed:{}
   padding-top: 52px;
 }
 .postGellay .picture{
-  margin-right: 49px;
+  margin-right: 50px;
 }
 
 .postGellay .picture:nth-child(5n){
