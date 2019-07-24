@@ -32,7 +32,7 @@ computed:{}
 </script>
 <style>
 .picture{
-    width: 240px;
+  width: 240px;
   height: 240px;
 }
 .picture .el-image {
@@ -47,8 +47,9 @@ computed:{}
   justify-content: center;
   align-items: center;
 }
-.el-image .image-slot .el-icon-loading{
-  font-size: 60px;
+.el-image .image-slot .el-icon-loading,
+.el-image .image-slot .el-icon-picture-outline{
+  font-size: 50px;
   color:#6151AE;
 }
 
