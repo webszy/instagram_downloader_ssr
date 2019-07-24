@@ -28,29 +28,47 @@
 
 <script>
 import {
-  getUserBaseInfo
+  getUserBaseInfo,
+  Service
 } from '@/utils/request'
 import userPostGellay from '@/components/insta/userPostGellay'
+import { mapMutations,mapGetters } from 'vuex'
+
 export default {
-name:'DownInsUserPost',
-components:{userPostGellay},
-data(){
-return {
-  username:this.$route.params.name || "NULL",
-  userPic:'https://scontent-hkg3-2.cdninstagram.com/vp/49e87078c63296b9f0f120fba424edf3/5DCD0D34/t51.2885-19/s150x150/65719865_469781647109356_4479842475334172672_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com',
-  inputVal:'',
-  componentName:'userPostGellay'
+  name:'DownInsUserPost',
+  components:{userPostGellay},
+  data(){
+  return {
+    username:this.$route.params.name || "NULL",
+    userPic:'',
+    inputVal:'',
+    componentName:'userPostGellay'
+    }
+  },
+ async asyncData({ store, params,$axios }){
+    let url='https://www.instagram.com/'+params.name+'/'
+    getUserBaseInfo(params.name)
+    .then(res=>{
+      console.log("TCL: Data -> res", res)
+      return store.commit('setProfile',res.data)
+    })
+    .catch(err=>{
+      console.log("TCL: Data -> err", err)
+      
+    })
+
+    
+ },
+  mounted(){
+    
+  },
+  methods:{
+    ...mapMutations(['setProfile']),
+    goNextPage(){}
+  },
+  computed:{
+    ...mapGetters(['profile'])
   }
- },
- asyncData({ route, store, env, params, query, req, res, redirect, error}) {
-  let username=params.name
- },
- fetch(){},
-mounted(){},
-methods:{
-  goNextPage(){}
- },
-computed:{}
 }
 </script>
 <style>
