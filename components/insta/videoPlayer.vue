@@ -42,7 +42,7 @@ return {
         type: "video/mp4",
         src: this.src
       }],
-      poster: "https://scontent-hkg3-2.cdninstagram.com/vp/69c7d5549f0289493c6485cf2a918a4a/5D3AE42B/t51.2885-15/e35/26071385_516980018688775_2785592389480218624_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com",
+      poster:this.postImg ,
   }
   }
  },
@@ -58,6 +58,10 @@ return {
   postImg:{
     type:String,
     required:true
+  },
+  fileName:{
+    type:String,
+    required:true
   }
  },
 mounted(){
@@ -67,7 +71,10 @@ methods:{
   onPlayerPlay(e){},
   onPlayerPause(e){},
   playerReadied(){},
-  playerStateChanged(e){}
+  playerStateChanged(e){},
+  fileDownload(){
+    this.$save(this.src,this.fileName+'.mp4')
+  }
  },
 computed:{}
 }

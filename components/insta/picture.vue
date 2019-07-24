@@ -27,7 +27,8 @@ props:{
   },
   title:{
     type:String,
-    required:true
+    required:true,
+    default:''
   },
   fileName:{
     type:String,
@@ -38,7 +39,7 @@ props:{
 mounted(){},
 methods:{
   fileDownload(){
-    this.$save(this.src,this.fileName)
+    this.$save(this.src,this.fileName+'.jpg')
   }
 },
 computed:{}
