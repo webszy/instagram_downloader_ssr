@@ -41,7 +41,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/videopPlayer'
+    '@/plugins/videopPlayer',
+    '@/plugins/fileSaver'
   ],
   /*
   ** Nuxt.js modules
