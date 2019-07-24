@@ -10,7 +10,7 @@
     </el-image>
     <div class="downloadLayer">
       <p>{{title}}</p>
-      <button class="downloadIcon"></button>
+      <button class="downloadIcon" @click="fileDownload"></button>
     </div>
   </div>
 </template>
@@ -28,13 +28,19 @@ props:{
   title:{
     type:String,
     required:true
+  },
+  fileName:{
+    type:String,
+    required:true
   }
   
 },
 mounted(){},
 methods:{
-
- },
+  fileDownload(){
+    this.$save(this.src,this.fileName)
+  }
+},
 computed:{}
 }
 </script>

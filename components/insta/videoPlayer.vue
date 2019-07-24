@@ -9,7 +9,7 @@
     </div>
     <div class="downloadLayer">
       <p>{{title}}</p>
-      <button class="downloadIcon"></button>
+      <button class="downloadIcon" @click="fileDownload"></button>
     </div>
   </div>
 </template>
@@ -40,7 +40,7 @@ return {
       },
       sources: [{
         type: "video/mp4",
-        src: "https://scontent.cdninstagram.com/vp/c0ece3f787060f452a4155f21e8d86e5/5D3A4B06/t50.2886-16/26260893_181645769255442_8741213847412007902_n.mp4?_nc_ht=scontent.cdninstagram.com"
+        src: this.src
       }],
       poster: "https://scontent-hkg3-2.cdninstagram.com/vp/69c7d5549f0289493c6485cf2a918a4a/5D3AE42B/t51.2885-15/e35/26071385_516980018688775_2785592389480218624_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com",
   }
@@ -52,6 +52,10 @@ return {
     required:true
   },
   title:{
+    type:String,
+    required:true
+  },
+  postImg:{
     type:String,
     required:true
   }
