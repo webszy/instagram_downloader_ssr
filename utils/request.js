@@ -1,22 +1,29 @@
 
 import axios from 'axios'
 import {getShareData,getQueryHashByScript,getProfilePageContainerURL} from './tools'
-
-const Service = axios.create({
+export const Service = axios.create({
     timeout: 7000, // 请求超时时间
     method:'get',
+    proxy:{
+    host: '127.0.0.1',
+    port: 7890
+  },
+  headers:{
+    'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'
+  }
 })
+
 const InsBaseProfileURL='https://www.instagram.com/',
 InsSearchURL='https://www.instagram.com/web/search/topsearch/?context=blended&query='
 Service.interceptors.response.use(
-        response => {
-            const res = response.data
-          
-            return res
-        },
-        error => {
-            return Promise.reject(error)
-        }
+  response => {
+      const res = response.data
+    
+      return res
+  },
+  error => {
+      return Promise.reject(error)
+  }
 )
 export function getUserBaseInfo(username){
   return Service({
