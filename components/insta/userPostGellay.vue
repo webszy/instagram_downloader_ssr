@@ -1,20 +1,18 @@
 <template>
   <div class='postGellay'>
-   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
-   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
-   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
-   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
-   <picture-item src='https://scontent-hkg3-2.cdninstagram.com/vp/8f5532f1d137da2e8ed538c280b25908/5DE98FC2/t51.2885-15/e35/p1080x1080/67193118_1097807187275050_1052215309554353349_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com'/>
-
+   <picture-item title='1231231' src=''/>
+   <video-player title='1231231' src=''></video-player>
+  
   </div>
 </template>
 
 
 <script>
 import pictureItem from './picture'
+import videoPlayer from './videoPlayer'
 export default {
 name:'userPostGellay',
-components:{pictureItem},
+components:{pictureItem,videoPlayer},
 data(){
 return {
 
@@ -41,19 +39,18 @@ computed:{}
 </script>
 <style>
 .postGellay{
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 13.67%;
+  width: 1400px;
+  margin: 0 auto;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
   padding-top: 52px;
 }
 .postGellay .picture{
-  margin-right: 50px;
+  margin-right: 60px;
+}
+.postGellay .picture:nth-child(3n){
+  margin-right:0;
 }
 
-.postGellay .picture:nth-child(5n){
-  margin-right: 0;
-}
 </style>
