@@ -1,7 +1,22 @@
 <template>
   <div class='postGellay'>
-   <picture-item title='1231231' src=''/>
-   <video-player title='1231231' src=''></video-player>
+    <div class="item" v-for="(k,i) in userMedia" :key=i>
+      <picture-item 
+        :title=k.title 
+        :src=k.display_url 
+        :fileName="getFileName(k)"
+        v-if="k.__typename!=='GraphVideo'" 
+        />
+       <video-player 
+        :title=k.title 
+        :src=k.video_url 
+        :fileName="getFileName(k)"
+        :postImg=k.display_url 
+        v-else
+       />
+    </div>
+   
+  
   
   </div>
 </template>
@@ -20,7 +35,7 @@ return {
  },
 props:{
   userMedia:{
-    type:Object,
+    type:Array,
     required:true
   }
 },
@@ -33,24 +48,33 @@ methods:{
          return item.display_url
       }
     },
+    getFileName(k){
+      let username=this.$route.params.name || ''
+      return username+'_'+k.shortcode
+    }
  },
 computed:{}
 }
 </script>
 <style>
 .postGellay{
-  width: 1400px;
+  width: 1401px;
   margin: 0 auto;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
   padding-top: 52px;
 }
-.postGellay .picture{
+.postGellay .item{
+  width: 300px;
+  height: 300px;
+  margin: auto;
+}
+/* .postGellay .picture{
   margin-right: 60px;
 }
 .postGellay .picture:nth-child(3n){
   margin-right:0;
-}
+} */
 
 </style>
