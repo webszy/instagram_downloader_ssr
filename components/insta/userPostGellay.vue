@@ -1,6 +1,6 @@
 <template>
   <div class='postGellay'>
-    <div class="item" v-for="(k,i) in userMedia" :key=i>
+    <div  v-for="(k,i) in userMedia" :key=i :class="getItemIndex(i)">
       <picture-item 
         :title=k.title 
         :src=k.display_url 
@@ -51,24 +51,48 @@ methods:{
     getFileName(k){
       let username=this.$route.params.name || ''
       return username+'_'+k.shortcode
+    },
+    getItemIndex(i){
+      let str='item '
+      if(i%4===0){
+        str+='itemFirst'
+      }else if(i%4===3){
+        str+='itemLast'
+      }else{
+        str+=''
+      }
+      return str
     }
  },
-computed:{}
+computed:{
+  
+}
 }
 </script>
 <style>
 .postGellay{
-  width: 1401px;
-  margin: 0 auto;
+  width: 100%;
+  /* margin: 0 auto; */
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  padding: 0 13.54%;
   padding-top: 52px;
+  box-sizing: border-box;
+  
 }
 .postGellay .item{
   width: 300px;
   height: 300px;
-  margin: auto;
+  /* margin: auto; */
+  margin-right: 3.49%;
+  margin-bottom: 60px;
+}
+.postGellay .itemFirst{
+  margin-left:0
+}
+.postGellay .itemLast{
+  margin-right:0
 }
 /* .postGellay .picture{
   margin-right: 60px;
