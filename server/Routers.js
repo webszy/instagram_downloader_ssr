@@ -5,10 +5,15 @@ router.get('/', function(req, res, next) {
 });
 router.ws('/cilent',(ws,req)=>{
     ws.send('connect successfully')
-
+    
     ws.on('message',msg=>{
-
-      ws.send(msg)
+      if(['127.0.0.1:3000','localhost:3000','http://www.websocket-test.com'].includes(req.headers.origin)){
+         ws.send(msg)
+         console.log(ws)
+      }else{
+        ws.send('Invalid request.')
+      }
+     
     })
 })
 
