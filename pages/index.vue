@@ -66,15 +66,16 @@ export default {
   },
   methods:{
     goNextPage(){
-      
+      let path='/'+this.routerPath[this.platform]
       if(this.inputVal.startsWith('https:')){
-
+        this.$router.push(path+'/post/shortcode/')
       }else{
-        let path='/'+this.routerPath[this.platform]
+        
         this.$router.push(path+'/post/user/'+this.inputVal)
       }
     },
     querySearchAsync(queryString,cb){
+      debugger
       if(queryString.startsWith('http:')||queryString.startsWith('https:')){
         return
       }
