@@ -11,7 +11,8 @@ export const Service = axios.create({
 })
 
 const InsBaseProfileURL='https://www.instagram.com/',
-InsSearchURL='https://www.instagram.com/web/search/topsearch/?context=blended&query='
+InsSearchURL='https://www.instagram.com/web/search/topsearch/?context=blended&query=',
+serverBaseURL='http://127.0.0.1:3000/data/ins'
 Service.interceptors.response.use(
   response => {
       const res = response.data
@@ -67,9 +68,9 @@ export function getNextPageData(userId, end_cursor,queryHash,tagname) {
          params:p
     })
 }
-export function getSingleMediaInfo(shortCode,username){
+export function getSingleMediaInfo(shortCode){
   return Service({
-    url:InsBaseProfileURL+username+'/p/'+shortCode+'/'
+    url:InsBaseProfileURL+'/p/'+shortCode+'/'
   })
   .then(res=>{
     return getShareData(res)
@@ -90,5 +91,13 @@ export function getHashTagData(tag){
 export function getInsSearchResult(qs){
   return Service({
     url:InsSearchURL+qs
+  })
+}
+export function fetchSingleMediaByShortcode(shortCode){
+    return Service({
+    url:serverBaseURL+'/detail',
+    params:{
+      shortcode:shortCode
+    }
   })
 }
