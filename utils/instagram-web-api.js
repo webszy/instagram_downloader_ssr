@@ -234,6 +234,14 @@ class Instagram {
         return reels[0].items
     }
 
+    async getUserStoryData({username}){
+       return this.request(`/stories/${username}/`) 
+       .then(res=>{
+           return res.body
+
+        })
+    }
+
     async markStoryItemAsSeen({
         reelMediaId,
         reelMediaOwnerId,
@@ -251,7 +259,7 @@ class Instagram {
             }
         })
     }
-
+    
     async _getFollowData({ fieldName, queryHash, variables }) {
         return this.request('/graphql/query/', {
                 qs: {
