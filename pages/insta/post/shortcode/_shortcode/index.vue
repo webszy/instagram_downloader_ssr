@@ -1,9 +1,7 @@
 <template>
   <div class='post'>
     <section class="top">
-      <el-input v-model="inputVal">
-        <button slot="suffix" class="search" @click="goNextPage">search</button>
-      </el-input>
+      <search-bar></search-bar>
       <section class="user">
         <img :src="userPic" alt="">
         <p>{{username}}</p>
@@ -40,10 +38,10 @@ import pictureItem from '@/components/insta/picture'
 import videoPlayer from '@/components/insta/videoPlayer'
 import loading from '@/components/loading'
 import {fetchSingleMediaByShortcode,getSingleMediaInfo} from '@/utils/request'
-
+import searchBar from '@/components/searchBar'
 export default {
 name:'DownInsPostByURL',
-components:{sFooter,pictureItem,videoPlayer,loading},
+components:{sFooter,pictureItem,videoPlayer,loading,searchBar},
 data(){
   return {
     username:'',
@@ -102,7 +100,9 @@ methods:{
       this.img_url=data.entry_data.PostPage[0].graphql.shortcode_media.display_url,
       this.title=data.entry_data.PostPage[0].graphql.shortcode_media.title||''
       this.$nextTick(()=>{
-        this.showLoading=false
+        setTimeout(()=>{
+          this.showLoading=false
+        },1000)
       })
     })
   },
@@ -141,7 +141,7 @@ computed:{
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   box-sizing: border-box;
-  padding-top: 130px;
+  padding-top: 80px;
   /* transform: rotateZ(180deg); */
   display: flex;
   flex-direction: column;
@@ -150,56 +150,7 @@ computed:{
   overflow: hidden; 
   position: relative;
 }
-.post .el-input{
-  width: 41.67%;
-  height: 100px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-.post .el-input input{
- width: 100%;
-  height: 100%;
-  border-radius: 68px;
-  padding-left: 42px;
-  box-sizing: border-box;
-  font-size: 24px;
-  font-family: Arial, Helvetica, sans-serif;
-  color:#AEAEAE;
-}
 
-.post .el-input input::placeholder{
-  color:#CFCFCF !important;
-  font-size: 24px;
-  opacity: 1;
-  padding: 1px;
-  line-height: 200%;
-}
-.post .el-input  .el-input__suffix{
-  display: block;
-  width:22.75%;
-  height:85%;
-  position: absolute;
-  right: 9px;
-  top:50%;
-}
-.post .el-input  .el-input__suffix-inner{
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.post .search{
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform: translateY(-50%);
-  background:linear-gradient(360deg,#EB6A81 0%,#FFC640 100%);
-  border-radius:68px;
-  font-size:36px;
-  font-family: 'Lalezar', cursive;
-  font-weight:400;
-  color:#fff;
-}
 .post .top .leftbg,
 .post .top .rightbg{
   display: block;
@@ -217,7 +168,7 @@ computed:{
   transform:rotateY(180deg) rotateZ(264deg);
 }
 .post .user{
-  margin-top: 80px;
+  margin-top: 40px;
 }
 .post .user img{
   width: 160px;
@@ -245,5 +196,8 @@ text-align: center;
 .post .singelDown .picture{
   width: 400px;
   height: 400px;
+}
+.post .singelDown .video .video-js .vjs-big-play-button{
+    top: 25%;
 }
 </style>

@@ -1,9 +1,7 @@
 <template>
   <div class='post'>
     <section class="top">
-      <el-input v-model="inputVal">
-        <button slot="suffix" class="search" @click="goNextPage">search</button>
-      </el-input>
+      <search-bar></search-bar>
       <section class="user">
         <img :src="userPic" alt="">
         <p>{{username}}</p>
@@ -27,6 +25,7 @@
       </button>
     </section>
     <s-footer/>
+    <loading v-if=showLoading />
   </div>
 </template>
 
@@ -41,22 +40,26 @@ import {
 import userPostGellay from '@/components/insta/userPostGellay'
 import sFooter from '@/components/footer'
 import { mapMutations,mapGetters } from 'vuex'
-import { Loading } from 'element-ui'
+import loading from '@/components/loading'
+import searchBar from '@/components/searchBar'
 export default {
   name:'DownInsUserPost',
-  components:{userPostGellay,sFooter},
+  components:{userPostGellay,sFooter,loading,searchBar},
   data(){
   return {
     username:this.$route.params.name || "NULL",
     userPic:require('@/assets/images/imagePlaceholder.png'),
     inputVal:'',
     componentName:'userPostGellay',
-    loadingItem:'',
     userMedias:[],
     end_cursor:'',
     has_next_page:false,
     jsFileURL:'',
-    userId:''
+    userId:'',
+    showLoading:false,
+     routerPath:{
+        Instagram:'insta'
+      }
     }
   },
   async fetch({ store, params }){
@@ -65,7 +68,7 @@ export default {
     
  },
   mounted(){
-    this.showLoading()
+    this.showLoading=true
     this.$nextTick(()=>{
       this.getUserProfile()
     })
@@ -116,17 +119,17 @@ export default {
         }
       })
       .finally(()=>{
+        
         if(type==='concat'){
           this.userMedias=this.userMedias.concat(arr)
         }else{
           this.userMedias=arr
         }
+       this.$nextTick(()=>{
+         this.showLoading=false
+       })
         
-        this.loadingItem.close()
       })
-    },
-    showLoading(){
-      this.loadingItem=this.$loading.service({ fullscreen: true,lock:true,text:'Fetching the user Data' })
     },
     loadMoreMedia(){
       if(this.componentName==='userPostGellay'){
@@ -137,7 +140,7 @@ export default {
     },
     loadMorePost(){
       if(this.has_next_page){
-        
+        this.showLoading=true
         getQueryHash(this.jsFileURL)
         .then(res=>{
           return getNextPageData(this.userId,this.end_cursor,res[2])
@@ -176,7 +179,7 @@ export default {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   box-sizing: border-box;
-  padding-top: 130px;
+  padding-top: 80px;
   /* transform: rotateZ(180deg); */
   display: flex;
   flex-direction: column;
@@ -252,7 +255,7 @@ export default {
   transform:rotateY(180deg) rotateZ(264deg);
 }
 .post .user{
-  margin-top: 80px;
+  margin-top: 40px;
 }
 .post .user img{
   width: 160px;
