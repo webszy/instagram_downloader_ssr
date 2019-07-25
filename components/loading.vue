@@ -14,7 +14,6 @@ import loadingData from '../assets/loadingData'
 import lottie from 'lottie-web'
 export default {
 name:'CommonLoading',
-
 mounted(){
   let anim=lottie.loadAnimation({
     container: this.$refs.element, // the dom element that will contain the animation
@@ -34,12 +33,15 @@ mounted(){
   position: fixed;
   left:0;
   top:0;
-  background-color: hsla(0,0%,100%,.9);
+  /* background-color: hsla(0,0%,100%,.9); */
+  background-color: transparent;
+  z-index: 999;
   transition: opacity .3s;
 }
 .loading .content{
   width: 400px;
-  height: 400px;
+  background-color:#fff;
+  border-radius: 20px;
   position: absolute;
   left: 50%;
   top:50%;
@@ -48,6 +50,7 @@ mounted(){
   flex-direction: column;
   justify-content: flex-start;
   align-items:center;
+  padding: 20px 0;
 }
 .loading .anim{
   width: 50%;
