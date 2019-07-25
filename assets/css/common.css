@@ -11,14 +11,15 @@
 .downloadLayer p{
   width: 87.5%;
   margin: 0 auto;
-  font-size:12px;
+  font-size:14px;
   font-family: Arial, Helvetica, sans-serif;
   line-height:14px;
   color: #fff;
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
-  padding-top: 14px;
+  padding-top: 16px;
+  text-align: center;
 }
 .downloadIcon{
   display: block;
