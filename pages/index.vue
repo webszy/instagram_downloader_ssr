@@ -68,14 +68,14 @@ export default {
     goNextPage(){
       let path='/'+this.routerPath[this.platform]
       if(this.inputVal.startsWith('https:')){
-        this.$router.push(path+'/post/shortcode/')
+        let shortcode=this.splitURLByPlatform()
+        this.$router.push(path+'/post/shortcode/'+shortcode)
       }else{
         
         this.$router.push(path+'/post/user/'+this.inputVal)
       }
     },
     querySearchAsync(queryString,cb){
-      debugger
       if(queryString.startsWith('http:')||queryString.startsWith('https:')){
         return
       }
@@ -98,6 +98,15 @@ export default {
     handleSelect(item){
       console.log("TCL: handleSelect -> item", item)
       this.inputVal=item.name
+    },
+    splitURLByPlatform(){
+      //https://www.instagram.com/p/BymN1ovnItK/
+      switch (this.platform) {
+        case 'Instagram':
+          return this.inputVal.split('https://www.instagram.com/p/')[1].split('/')[0]
+        default:
+          break;
+      }
     }
   }
 }
