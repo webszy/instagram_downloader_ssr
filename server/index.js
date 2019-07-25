@@ -1,12 +1,18 @@
 const express = require('express')
+const ws=require('express-ws')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
+ws(app)
+const Routers=require('./Routers')
+
+
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
-
+/*Use router*/ 
+app.use('/data', Routers);
 async function start() {
   // Init Nuxt.js
   const nuxt = new Nuxt(config)
@@ -23,10 +29,7 @@ async function start() {
 
   // Give nuxt middleware to express
  
-  app.get('/data',(req,res)=>{
-    console.log('aaa')
-    res.json({msg:'hello word'})
-  })
+  
   app.use(nuxt.render)
   // Listen the server
   app.listen(port, host)
