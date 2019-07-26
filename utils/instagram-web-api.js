@@ -21,7 +21,8 @@ class Instagram {
         const { value: csrftoken } =
         jar.getCookies(baseUrl).find(({ key }) => key === 'csrftoken') || {}
 
-        const userAgent = useragentFromSeed(username)
+        // const userAgent = useragentFromSeed(username)
+        const userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'
         if (requestOptions === undefined) {
             requestOptions = {}
         }
@@ -33,6 +34,9 @@ class Instagram {
             'X-Instagram-AJAX': 1,
             'X-CSRFToken': csrftoken,
             'X-Requested-With': 'XMLHttpRequest',
+            'x-ig-app-id': 936619743392459,
+            'x-instagram-aja': '79d0a43d9853',
+
             Referer: baseUrl
         }
         requestOptions.proxy = proxy
