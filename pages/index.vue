@@ -109,8 +109,11 @@ export default {
   transform:rotateY(180deg) rotateZ(264deg);
 }
 .home .card{
-  width:420px;
-  height:480px;
+  width:21.88%;
+  /* height:480px; */
+  height: 72.8%;
+  max-width: 420px;
+  max-height: 480px;
   background:#fff;
   box-shadow:6px 50px 55px 0px rgba(225,222,241,0.4);
   border-radius:30px;
@@ -122,7 +125,7 @@ export default {
   padding-top:50px; 
   z-index: 1;
   position: absolute;
-  left: 260px;
+  left: 13.45%;
   top:741px;
 }
 .home .card:nth-of-type(2){
@@ -132,12 +135,12 @@ export default {
 }
 .home .card:last-of-type{
   left: auto;
-  right: 258px;
+  right: 13.43%;
 }
 .home .card img{
   display: block;
-  width: 41.43%;
-  height: 40.47%;
+  width: 174px;
+  height: 174px;
   margin-bottom: 16px;
 }
 .home .card h3{
@@ -155,6 +158,40 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
   color:rgba(94,89,118,1);
   line-height:30px;
+}
+@media screen and (max-width:1300px){
+  .home .top{
+    padding-top: 154px;
+  }
+  .home .card{
+    width: 336px;
+    height: 384px;
+    padding-top: 40px;
+    left:6.45%;
+    top:640px;
+  }
+  .home .card:nth-of-type(2){
+    top:704px;
+  }
+  .home .card:last-of-type{
+    right: 6.45%;
+  }
+  .home .card img{
+    width: 139px;
+    height: 139px;
+  }
+  .home .card h3{
+    font-size: 28px;
+    height: 48px;
+    line-height: 48px;
+  }
+  .home .card p{
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .searchBar .el-input{
+
+  }
 }
 
 </style>

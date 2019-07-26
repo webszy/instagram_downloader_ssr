@@ -41,4 +41,10 @@ name:'sFooter',
 .footer a{
     color:#fff;
 }
+@media screen and (max-width:1300px){
+  .footer{
+     margin-top:424px;
+      font-size:16px;
+  }
+}
 </style>

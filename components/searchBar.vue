@@ -185,4 +185,9 @@ computed:{}
   font-weight:400;
   color:#fff;
 }
+@media screen and (max-width:1300px){
+  .searchBar .el-input{
+    width: 633px;
+  }
+}
 </style>

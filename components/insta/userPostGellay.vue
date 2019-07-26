@@ -53,10 +53,17 @@ methods:{
       return username+'_'+k.shortcode
     },
     getItemIndex(i){
-      let str='item '
-      if(i%4===0){
+      let str='item ',
+      num=4,
+      w=document.body.clientWidth||window.screen.width
+
+      if(w<=1300){
+        num=3
+      }
+
+      if(i%num===0){
         str+='itemFirst'
-      }else if(i%4===3){
+      }else if(i%num===(num-1)){
         str+='itemLast'
       }else{
         str+=''
@@ -79,13 +86,12 @@ computed:{
   padding: 0 13.54%;
   padding-top: 52px;
   box-sizing: border-box;
-  
 }
 .postGellay .item{
   width: 300px;
   height: 300px;
-  /* margin: auto; */
-  margin-right: 3.49%;
+  margin: auto;
+  /* margin-right: 3.49%; */
   margin-bottom: 60px;
 }
 .postGellay .itemFirst{
@@ -94,11 +100,16 @@ computed:{
 .postGellay .itemLast{
   margin-right:0
 }
-/* .postGellay .picture{
-  margin-right: 60px;
-}
-.postGellay .picture:nth-child(3n){
-  margin-right:0;
-} */
 
+@media screen and (max-width:1300px){
+    .postGellay{
+       padding: 0 11%;
+       padding-top: 52px;
+    }
+  .postGellay .item{
+    width: 240px;
+    height: 240px;
+
+  }
+}
 </style>

@@ -47,8 +47,8 @@ computed:{}
 </script>
 <style>
 .picture{
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   margin-bottom:60px;
   position: relative;
   overflow: hidden;

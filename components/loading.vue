@@ -2,7 +2,7 @@
   <div class='loading'>
     <div class="content">
       <div ref="element" class="anim"></div>
-      <p>Loaidng...</p>
+      <p>Loading...</p>
     </div>
     
   </div>
@@ -44,13 +44,14 @@ mounted(){
   border-radius: 20px;
   position: absolute;
   left: 50%;
-  top:50%;
+  top:45%;
   transform: translate(-50%,-50%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items:center;
   padding: 20px 0;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 }
 .loading .anim{
   width: 50%;

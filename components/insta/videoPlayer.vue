@@ -81,8 +81,8 @@ computed:{}
 </script>
 <style>
 .video{
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden;
 }
