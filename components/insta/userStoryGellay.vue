@@ -1,22 +1,13 @@
 <template>
-  <div class='postGellay'>
-    <div  v-for="(k,i) in userMedia" :key=i :class="getItemIndex(i)">
-      <picture-item 
-        :title=k.title 
-        :src=k.display_url 
-        :fileName="getFileName(k)"
-        v-if="k.__typename!=='GraphVideo'" 
-        />
+  <div class=' story'>
+    <div  v-for="(k,i) in storyMedia.items" :key=i :class="getItemIndex(i)">
        <video-player 
-        :title=k.title 
-        :src=k.video_url 
+        title=''
+        :src=k.video_resources[0].src
         :fileName="getFileName(k)"
         :postImg=k.display_url 
-        v-else
        />
-    </div>
-   
-  
+    </div> 
   
   </div>
 </template>
@@ -25,38 +16,41 @@
 <script>
 import pictureItem from './picture'
 import videoPlayer from './videoPlayer'
+import {getUserStories} from '@/utils/request'
 export default {
-name:'userPostGellay',
+name:'userStoryGellay',
 components:{pictureItem,videoPlayer},
 data(){
 return {
-
+  stories:{},
+  showLoaidng:false
   }
  },
 props:{
-  userMedia:{
-    type:Array,
+  storyMedia:{
+    type:Object,
     required:true
   }
 },
-mounted(){},
+mounted(){
+},
 methods:{
-   getMediaSrc(item){
-      if(item.thumbnail_resources&&item.thumbnail_resources[0]){
-        return item.thumbnail_resources[0].src
-      }else{
-         return item.display_url
-      }
-    },
     getFileName(k){
       let username=this.$route.params.name || ''
-      return username+'_'+k.shortcode
+      return username+'_Story_'+k.taken_at_timestamp
     },
     getItemIndex(i){
-      let str='item '
-      if(i%4===0){
+      let str='item ',
+      num=4,
+      w=document.body.clientWidth||window.screen.width
+
+      if(w<=1300){
+        num=3
+      }
+
+      if(i%num===0){
         str+='itemFirst'
-      }else if(i%4===3){
+      }else if(i%num===(num-1)){
         str+='itemLast'
       }else{
         str+=''
@@ -70,7 +64,7 @@ computed:{
 }
 </script>
 <style>
-.postGellay{
+.story{
   width: 100%;
   /* margin: 0 auto; */
   display: flex;
@@ -81,24 +75,31 @@ computed:{
   box-sizing: border-box;
   
 }
-.postGellay .item{
+
+.story .item{
   width: 300px;
   height: 300px;
   /* margin: auto; */
   margin-right: 3.49%;
   margin-bottom: 60px;
 }
-.postGellay .itemFirst{
+.story .itemFirst{
   margin-left:0
 }
-.postGellay .itemLast{
+.story .itemLast{
   margin-right:0
 }
+
 /* .postGellay .picture{
   margin-right: 60px;
 }
 .postGellay .picture:nth-child(3n){
   margin-right:0;
 } */
-
+.story .video .video-js .vjs-big-play-button{
+  top: 25%;
+}
+.story .video video{
+  object-fit: contain; 
+}
 </style>

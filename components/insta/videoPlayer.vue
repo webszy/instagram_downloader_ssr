@@ -108,4 +108,13 @@ computed:{}
 .video .video-js .vjs-big-play-button span{
   display: none;
 }
+.video  video[poster]{
+    object-fit: contain;
+}
+.video  .vjs-poster {
+    background-size: contain;
+    background-position-y: inherit;
+    background-position-x: center;
+    background-size: 80% 100%;
+}
 </style>
