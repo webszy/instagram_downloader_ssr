@@ -101,3 +101,22 @@ export function fetchSingleMediaByShortcode(shortCode){
     }
   })
 }
+export function getUserStories(userId){
+let variables={
+    reel_ids:[userId+''],
+    tag_names:[],
+    location_ids:[],
+    highlight_reel_ids:[],
+    precomposed_overlay:false,
+    show_story_viewer_list:true,
+    story_viewer_fetch_count:50,
+    story_viewer_cursor:"",
+    stories_video_dash_manifest:false
+  }
+  // story的queryhash与之前的不同，由于难以提取，暂时写死
+  variables=escape(JSON.stringify(variables))
+  
+  return Service({
+    url:InsBaseProfileURL+'graphql/query/?query_hash=cda12de4f7fd3719c0569ce03589f4c4&variables='+variables,
+  })
+}

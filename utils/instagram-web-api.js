@@ -153,7 +153,8 @@ class Instagram {
     async getStoryReelFeed({ onlyStories = false } = {}) {
         return this.request('/graphql/query/', {
                 qs: {
-                    query_hash: '60b755363b5c230111347a7a4e242001',
+                    // query_hash: '60b755363b5c230111347a7a4e242001',
+                    query_hash:"cda12de4f7fd3719c0569ce03589f4c4",
                     variables: JSON.stringify({
                         only_stories: onlyStories
                     })
@@ -237,11 +238,26 @@ class Instagram {
         return reels[0].items
     }
 
-    async getUserStoryData({username}){
-       return this.request(`/stories/${username}/`) 
+    async getUserStoryData({userId}){
+    //    const user = await this.getUserByUsername({ username })
+       return this.request('/graphql/query/',{
+           qs:{
+                query_hash: 'cda12de4f7fd3719c0569ce03589f4c4',
+                variables: JSON.stringify({
+                    "reel_ids":[userId+''],
+                    "tag_names":[],
+                    "location_ids":[],
+                    "highlight_reel_ids":[],
+                    "precomposed_overlay":false,
+                    "show_story_viewer_list":true,
+                    "story_viewer_fetch_count":50,
+                    "story_viewer_cursor":"",
+                    "stories_video_dash_manifest":false
+                })
+            }
+       }) 
        .then(res=>{
-           return res.body
-
+           return res
         })
     }
 

@@ -13,7 +13,8 @@
 <script>
 window.onload = async function(){
   let queryHash='cda12de4f7fd3719c0569ce03589f4c4',
-  variables={"reel_ids":["25388753"],
+  variables={
+    "reel_ids":["6053753132"],
     "tag_names":[],
     "location_ids":[],
     "highlight_reel_ids":[],
@@ -23,9 +24,7 @@ window.onload = async function(){
     "story_viewer_cursor":"",
     "stories_video_dash_manifest":false
   }
-  const request=axios.create({
-    
-  })
+  const request=axios.create()
 
   // let res =await request({
   //   url:'https://www.instagram.com/graphql/query/',
@@ -33,20 +32,32 @@ window.onload = async function(){
   //   params:{
   //     query_hash:queryHash,
   //     variables:variables
-  //   },
+  //   }
   // })
-  let reg=/<script.*src="(.*Consumer.js*)".*<\/script>/
-  let index = await request('https://www.instagram.com/stories/mvlu_/')
-  let arr=index.data.split('<script type="text/javascript"'),jsURL=''
-  arr.forEach(element => {
-    if(element.indexOf(' src=')===0&&element.indexOf('Consumer.js')>0){
-      jsURL=element.substring(5).split('crossorigin')[0].split('"')[1]
+  // let reg=/<script.*src="(.*Consumer.js*)".*<\/script>/
+  // let index = await request('https://www.instagram.com/stories/jairajcastejon11/')
+  // let arr=index.data.split('<script type="text/javascript"'),jsURL=''
+  // arr.forEach(element => {
+  //   if(element.indexOf(' src=')===0&&element.indexOf('Consumer.js')>0){
+  //     jsURL=element.substring(5).split('crossorigin')[0].split('"')[1]
+  //   }
+  // });
+  // jsURL='https://www.instagram.com'+jsURL
+  // console.log("TCL: jsURL", jsURL)
+  // let jsfile=await request(jsURL)
+  // queryHash=jsfile.data.split('h="')[1].split('",')[0].replace('"','')
+  // console.log("TCL: queryHash", queryHash)
+  let res =await request({
+    url:'https://www.instagram.com/graphql/query/',
+    method:'get',
+    params:{
+      query_hash:'cda12de4f7fd3719c0569ce03589f4c4',
+      variables:variables
+    },
+    headers:{
     }
-  });
-  jsURL='https://www.instagram.com'+jsURL
-  console.log("TCL: jsURL", jsURL)
-  let jsfile=await request(jsURL)
-  console.log("TCL: jsfile", jsfile.data.match('h="'))
+  })
+  console.log("TCL: res", res)
   
 }
 </script>
