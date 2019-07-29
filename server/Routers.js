@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 // const inScraper=require('../utils/insScraper')
 const Instagram=require('../utils/instagram-web-api')
+const rp=require('request-promise')
 router.get('/', function(req, res, next) {
   res.send(' Priavte Data Provider for Webszy')
 });
@@ -13,7 +14,9 @@ const insCilent = new Instagram(
   },
   {proxy:'http://127.0.0.1:7890'}
 )
-// insCilent.login()
+  // insCilent.login()
+
+
 
 // websocket for instagram stroy
 /*
@@ -45,9 +48,10 @@ router.ws('/inscilent',(ws,req)=>{
 })*/
 router.get('/ins/story',(req,res)=>{
   let userId=req.query.userid
-   if(['127.0.0.1:3000','localhost:3000'].includes(req.headers.origin)){
+  if(['127.0.0.1:3000','localhost:3000'].includes(req.headers.host)){
       insCilent.getUserStoryData({userId})
           .then(res=>{
+          console.log("TCL: res", res)
             if(res.status==='ok'){
               res.json(res.data.reels_media)
             }
@@ -55,9 +59,21 @@ router.get('/ins/story',(req,res)=>{
           .catch(err=>{
             res.json({msg:err,status:'failed'})
           })
-   }else{
-     res.json({msg:'Invalid request.',status:'failed'})
-   }
+  }else{
+    res.json({msg:'Invalid request.',status:'failed'})
+  }
+})
+router.get('/ins/story2',(req,res)=>{
+  let userName=req.query.username
+  rp.get('https://api.storiesig.com/stories/'+userName,{
+    resolveWithFullResponse: true,
+    headers:{
+      origin:'https://storiesig.com'
+    }
+  })
+  .then(res2=>{
+    res.json(JSON.parse(res2.body))
+  })
 })
 // 获取某个帖子的详细信息
 /*

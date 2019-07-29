@@ -1,14 +1,14 @@
 <template>
-  <div class=' story'>
+  <div class='story'>
     <div  v-for="(k,i) in storyMedia.items" :key=i :class="getItemIndex(i)">
        <video-player 
         title=''
-        :src=k.video_resources[0].src
+        :src=k.video_versions[0].url
         :fileName="getFileName(k)"
-        :postImg=k.display_url 
+        :postImg=k.image_versions2.candidates[0].url
        />
     </div> 
-  
+    <div class="empty" v-show="storyMedia.items.length==0">Nothing of story</div>
   </div>
 </template>
 
@@ -22,8 +22,7 @@ name:'userStoryGellay',
 components:{pictureItem,videoPlayer},
 data(){
 return {
-  stories:{},
-  showLoaidng:false
+
   }
  },
 props:{

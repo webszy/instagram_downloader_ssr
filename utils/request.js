@@ -101,8 +101,9 @@ export function fetchSingleMediaByShortcode(shortCode){
     }
   })
 }
+// 目前需要登录才能获取到信息，暂时废弃
 export function getUserStories(userId){
-let variables={
+  let variables={
     reel_ids:[userId+''],
     tag_names:[],
     location_ids:[],
@@ -120,3 +121,20 @@ let variables={
     url:InsBaseProfileURL+'graphql/query/?query_hash=cda12de4f7fd3719c0569ce03589f4c4&variables='+variables,
   })
 }
+export function getUserStoriesByLogin(userId){
+  return Service({
+    url:'/data/ins/story',
+    params:{
+      userId
+    }
+  })
+}
+export function getUserStories2(username){
+  return Service({
+    url:'/data/ins/story2',
+    params:{
+      username
+    }
+  })
+}
+// https://api.storiesig.com/stories/jairajcastejon11

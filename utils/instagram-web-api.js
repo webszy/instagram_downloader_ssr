@@ -31,11 +31,10 @@ class Instagram {
         requestOptions.headers = {
             'User-Agent': userAgent,
             'Accept-Language': language || 'en-US',
-            'X-Instagram-AJAX': 1,
-            'X-CSRFToken': csrftoken,
+            // 'X-Instagram-AJAX': 1,
+            // 'X-CSRFToken': csrftoken,
             'X-Requested-With': 'XMLHttpRequest',
             'x-ig-app-id': 936619743392459,
-            'x-instagram-aja': '79d0a43d9853',
             Referer: baseUrl
         }
         requestOptions.proxy = proxy

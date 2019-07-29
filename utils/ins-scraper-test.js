@@ -26,26 +26,26 @@ let insCilent = new Instagram({
 async function getStory(){
   await insCilent.login()
   // const profile= await insCilent.getProfile()
-  const story=await insCilent.getUserStoryData({username:'jairajcastejon11'})
+  const story=await insCilent.getUserStoryData({userId:'6053753132'})
   console.log("TCL: getStory -> story", story)
 }
 getStory()
-// async function getStoryWithoutLogin(){
-//   let variables={
-//     "reel_ids":["6053753132"],
-//     "tag_names":[],
-//     "location_ids":[],
-//     "highlight_reel_ids":[],
-//     "precomposed_overlay":false,
-//     "show_story_viewer_list":true,
-//     "story_viewer_fetch_count":50,
-//     "story_viewer_cursor":"",
-//     "stories_video_dash_manifest":false
-//   }
-//   let url='https://www.instagram.com/graphql/query/?query_hash=cda12de4f7fd3719c0569ce03589f4c4&variables='+escape(JSON.stringify(variables))
-//   let res =await rp.get(url,requestOptions)
-//   console.log("TCL: getStoryWithoutLogin -> res", res.body)
-// }
+async function getStoryWithoutLogin(){
+  let variables={
+    "reel_ids":["6053753132"],
+    "tag_names":[],
+    "location_ids":[],
+    "highlight_reel_ids":[],
+    "precomposed_overlay":false,
+    "show_story_viewer_list":true,
+    "story_viewer_fetch_count":50,
+    "story_viewer_cursor":"",
+    "stories_video_dash_manifest":false
+  }
+  let url='https://www.instagram.com/graphql/query/?query_hash=cda12de4f7fd3719c0569ce03589f4c4&variables='+escape(JSON.stringify(variables))
+  let res =await rp.get(url,requestOptions)
+  console.log("TCL: getStoryWithoutLogin -> res", res.body)
+}
 // getStoryWithoutLogin()
   /*
     async function getFollowers(){
