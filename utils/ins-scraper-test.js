@@ -34,25 +34,27 @@ async function test2(){
   console.log("TCL: reelsFeed", reelsFeed)
 }
   
-test2()
+// test2()
 async function getStory(){
   let insCilent = new Instagram(
     {
-      username: 'mcici12345',
-      password: '123456xu'
+      username: 'szylife',
+      password: '82135795'
     },
     {proxy:'http://127.0.0.1:7890'}
   )
 
   await insCilent.login()
   const profile= await insCilent.getProfile()
+  const res=await insCilent._getURL('https://www.instagram.com/stories/billieeilish/')
+  console.log("TCL: getStory -> res", res)
   // process.nextTick(async ()=>{
   //   const story=await insCilent.getUserStoryData({userId:'6053753132'})
   //   console.log("TCL: getStory -> story", story)
   // })
   
 }
-// getStory()
+getStory()
 // async function getStoryWithoutLogin(){
 //   let variables={
 //     "reel_ids":["6053753132"],
