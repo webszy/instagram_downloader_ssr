@@ -46,6 +46,7 @@ import sFooter from '@/components/footer'
 import { mapMutations,mapGetters } from 'vuex'
 import loading from '@/components/loading'
 import searchBar from '@/components/searchBar'
+
 export default {
   name:'DownInsUserPost',
   components:{userPostGellay,sFooter,loading,searchBar,userStoryGellay},
@@ -67,10 +68,8 @@ export default {
       storyMedia:{}
     }
   },
-  async fetch({ store, params }){
-    // let {data}= await getUserBaseInfo(params.name)
-    // return store.commit('setProfile',data)
-    
+  async asyncData({ store, params }){
+
  },
   mounted(){
     this.showLoading=true

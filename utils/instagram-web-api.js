@@ -523,6 +523,12 @@ class Instagram {
             .get('/graphql/query/', options)
             .then(response => response.data.user)
     }
+    async _getURL(url){
+        return this.request(url)
+        .then(res=>{
+            return res.body
+        })
+    }
 }
 
 module.exports = Instagram

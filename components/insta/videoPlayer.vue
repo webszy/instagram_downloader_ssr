@@ -92,6 +92,7 @@ computed:{}
 }
 .video .vjs-poster,.video .video-js{
   width: 100%;
+  height: 100%;
 }
 .video .video-js .vjs-big-play-button{
   width: 56px;

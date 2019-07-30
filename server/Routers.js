@@ -15,7 +15,12 @@ const insCilent = new Instagram(
   {proxy:'http://127.0.0.1:7890'}
 )
   // insCilent.login()
-
+  // .then(()=>{
+  //   insCilent
+  //   .getProfile()
+  //     .then(console.log)
+  // })
+  
 
 
 // websocket for instagram stroy
