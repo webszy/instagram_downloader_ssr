@@ -98,7 +98,10 @@ computed:{
 .story .video .video-js .vjs-big-play-button{
   top: 25%;
 }
-.story .video video{
-  object-fit: contain; 
-}
+ .story .video video{
+  object-fit: cover; 
+} 
+ .story .video-js .vjs-tech{
+   height: 50%;
+ }
 </style>
