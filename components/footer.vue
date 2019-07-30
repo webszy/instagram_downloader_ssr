@@ -2,12 +2,12 @@
  <footer class="footer">
    <section class="navs">
      <nav><a href="javascript:;">Contact |</a></nav>
-     <nav><a href="javascript:;">&nbsp;Terms of Service |</a></nav>
-     <nav><a href="javascript:;">&nbsp;Privacy policy |</a></nav>
-     <nav><a href="javascript:;">&nbsp;How to use</a></nav>
+     <nav><a href="https://gainfollow.vip" title="easy to get Followers">&nbsp;GainFollow |</a></nav>
+     <nav><a href="https://morelikes.vip" title="Most Simple Way to Get Likes">&nbsp;MoreLikes |</a></nav>
+     <nav><a href="https://insanalysis.vip" title="analysis your instagram account">&nbsp;insAnalysis</a></nav>
    </section>
    <section>
-     Copyright &copy; 2019 Instagram Stories. All right reserved
+     Copyright &copy; 2019 Instagram Downloader. All right reserved
    </section>
  </footer>
 </template>
