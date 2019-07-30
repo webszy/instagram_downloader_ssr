@@ -3,7 +3,7 @@
     <div  v-for="(k,i) in storyMedia.items" :key=i :class="getItemIndex(i)">
        <video-player 
         title=''
-        :src=k.video_versions[0].url
+        :src=getSrc(k)
         :fileName="getFileName(k)"
         :postImg=k.image_versions2.candidates[0].url
        />
@@ -32,6 +32,7 @@ props:{
   }
 },
 mounted(){
+  
 },
 methods:{
     getFileName(k){
@@ -55,6 +56,13 @@ methods:{
         str+=''
       }
       return str
+    },
+    getSrc(item){
+      if(!item.video_versions){
+        return ''
+      }else{
+        return k.video_versions[0].url
+      }
     }
  },
 computed:{
