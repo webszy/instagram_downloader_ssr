@@ -56,6 +56,7 @@ methods:{
       let str='item ',
       num=4,
       w=document.body.clientWidth||window.screen.width
+      console.log("TCL: getItemIndex -> w", w)
 
       if(w<=1300){
         num=3
@@ -63,7 +64,7 @@ methods:{
 
       if(i%num===0){
         str+='itemFirst'
-      }else if(i%num===(num-1)){
+      }else if(i%num===num){
         str+='itemLast'
       }else{
         str+=''
