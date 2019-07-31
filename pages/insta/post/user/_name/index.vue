@@ -46,7 +46,7 @@ import sFooter from '@/components/footer'
 import { mapMutations,mapGetters } from 'vuex'
 import loading from '@/components/loading'
 import searchBar from '@/components/searchBar'
-
+const mockData=require('@/utils/storymock')
 export default {
   name:'DownInsUserPost',
   components:{userPostGellay,sFooter,loading,searchBar,userStoryGellay},
@@ -65,7 +65,7 @@ export default {
      routerPath:{
         Instagram:'insta'
       },
-      storyMedia:{}
+      storyMedia:mockData
     }
   },
   async asyncData({ store, params }){
@@ -127,7 +127,8 @@ export default {
         }else{
           this.userMedias=arr
         }
-        this.getUserStoryData2()
+        this.showLoading=false
+        // this.getUserStoryData2()
         
       })
     },
@@ -155,26 +156,7 @@ export default {
         })
       })
     },
-    getUserStoryData2(){
-      getUserStories2(this.username)
-      .then(res=>{
-        console.log("TCL: goNextPage -> res", res)
-        if(res.status==='ok'){
-          this.storyMedia=res
-        }else{
-          this.storyMedia={items:[]}
-        }
-         this.$nextTick(()=>{
-         this.showLoading=false
-        })
-      })
-      .catch(err=>{
-        console.log('err',err)
-         this.$nextTick(()=>{
-         this.showLoading=false
-        })
-      })
-    },
+
     loadMoreMedia(){
       if(this.componentName==='userPostGellay'){
         return this.loadMorePost()
