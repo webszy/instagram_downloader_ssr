@@ -1,6 +1,6 @@
 <template>
-  <div class='postGellay'>
-    <div  v-for="(k,i) in userMedia" :key=i :class="getItemIndex(i)">
+  <div class='postGellay' id='postGellay' :style="getBoxWidth">
+    <div  v-for="(k,i) in userMedia" :key=i :class="getItemIndex(i)" >
       <picture-item 
         :title=k.title 
         :src=k.display_url 
@@ -30,7 +30,8 @@ name:'userPostGellay',
 components:{pictureItem,videoPlayer},
 data(){
 return {
-
+  lineNum:4,
+  marginRight:'auto'
   }
  },
 props:{
@@ -54,45 +55,50 @@ methods:{
     },
     getItemIndex(i){
       let str='item ',
-      num=4,
       w=document.body.clientWidth||window.screen.width
-      console.log("TCL: getItemIndex -> w", w)
-
       if(w<=1300){
-        num=3
+        this.lineNum=3
       }
 
-      if(i%num===0){
+      if(i%this.lineNum===0){
         str+='itemFirst'
-      }else if(i%num===num){
+      }else if(i%this.lineNum===this.lineNum-1){
         str+='itemLast'
       }else{
         str+=''
-      }
+      }      
       return str
     }
  },
 computed:{
-  
+  getBoxWidth(){
+    let width
+    if(this.lineNum===3){
+      width = (3*240+2*30)
+    }else{
+      width = (4*300+3*30)
+    }
+    return `width:${width}px`
+  }
 }
 }
 </script>
 <style>
 .postGellay{
-  width: 100%;
-  /* margin: 0 auto; */
+  /* width: 100%; */
+  margin: 0 auto;
   display: flex;
-  justify-content: flex-start;
+  justify-content:flex-start;
   flex-wrap: wrap;
-  padding: 0 13.54%;
+  /* padding: 0 13.54%; */
   padding-top: 52px;
   box-sizing: border-box;
 }
 .postGellay .item{
   width: 300px;
   height: 300px;
-  margin: auto;
-  /* margin-right: 3.49%; */
+  /* margin: auto; */
+  margin-right: 30px;
   margin-bottom: 60px;
 }
 .postGellay .itemFirst{
@@ -104,7 +110,7 @@ computed:{
 
 @media screen and (max-width:1300px){
     .postGellay{
-       padding: 0 11%;
+       /* padding: 0 11%; */
        padding-top: 52px;
     }
   .postGellay .item{
