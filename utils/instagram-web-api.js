@@ -526,7 +526,7 @@ class Instagram {
     async _getURL(url){
         return this.request(url)
         .then(res=>{
-            return res.body
+            return res
         })
     }
 }

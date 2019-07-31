@@ -16,6 +16,7 @@ const {IgApiClient}=require('instagram-private-api')
 //   }
 const Instagram =require('./instagram-web-api')
 // https://www.instagram.com/stories/highlights/17907400474216512/
+
  function getShareData(str){
     return JSON.parse(str.match(/(window._sharedData\s?)(=\s?)(.*?);<\/script>/)[3])
 }
@@ -23,11 +24,11 @@ const Instagram =require('./instagram-web-api')
 
 async function test2(){
   const ig = new IgApiClient();
-  ig.state.generateDevice('szylife');
+  ig.state.generateDevice('opgpstypd');
   ig.state.proxyUrl = 'http://127.0.0.1:7890'
   await ig.simulate.preLoginFlow();
-  const auth = await ig.account.login('mcici123451', '123456asd')
-  const targetUser = await ig.user.searchExact('billieeilish')
+  const auth = await ig.account.login('opgpstypd', '147258')
+  const targetUser = await ig.user.searchExact('ayattachiante')
   const reelsFeed = ig.feed.reelsMedia({ // working with reels media feed (stories feed)
     userIds: [targetUser.pk], // you can specify multiple user id's, "pk" param is user id
   });
@@ -35,18 +36,19 @@ async function test2(){
 }
   
 // test2()
+
 async function getStory(){
   let insCilent = new Instagram(
     {
-      username: 'szylife',
-      password: '82135795'
+      username: 'opgpstypd',
+      password: '147258'
     },
     {proxy:'http://127.0.0.1:7890'}
   )
 
   await insCilent.login()
   const profile= await insCilent.getProfile()
-  const res=await insCilent._getURL('https://www.instagram.com/stories/billieeilish/')
+  const res=await insCilent._getURL('/stories/ayattachiante/')
   console.log("TCL: getStory -> res", res)
   // process.nextTick(async ()=>{
   //   const story=await insCilent.getUserStoryData({userId:'6053753132'})
@@ -54,7 +56,7 @@ async function getStory(){
   // })
   
 }
-getStory()
+// getStory()
 // async function getStoryWithoutLogin(){
 //   let variables={
 //     "reel_ids":["6053753132"],
