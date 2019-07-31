@@ -8,7 +8,7 @@
         :postImg=k.image_versions2.candidates[0].url
        />
     </div> 
-    <div class="empty" v-show="storyMedia.items.length==0">Nothing of story</div>
+    <div class="empty" v-show="storyMedia.length==0">Nothing of story</div>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ return {
  },
 props:{
   storyMedia:{
-    type:Object,
+    type:Array,
     required:true
   }
 },
