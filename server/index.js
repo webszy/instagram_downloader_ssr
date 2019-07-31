@@ -5,13 +5,14 @@ const { Nuxt, Builder } = require('nuxt')
 const app = express()
 // ws(app)
 const Routers=require('./Routers')
-
+// const testRouters=require('./test')
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
 /*Use router*/ 
 app.use('/data', Routers);
+// app.use('/test', testRouters);
 async function start() {
   // Init Nuxt.js
   const nuxt = new Nuxt(config)

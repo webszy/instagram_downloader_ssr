@@ -1,26 +1,12 @@
 const express = require('express');
 const router = express.Router();
-// const inScraper=require('../utils/insScraper')
-const Instagram=require('../utils/instagram-web-api')
+const mockData=require('../utils/storymock')
 const rp=require('request-promise')
 router.get('/', function(req, res, next) {
   res.send(' Priavte Data Provider for Webszy')
 });
 
-const insCilent = new Instagram(
-  {
-    username: 'szylife',
-    password: '82135795'
-  },
-  {proxy:'http://127.0.0.1:7890'}
-)
-  // insCilent.login()
-  // .then(()=>{
-  //   insCilent
-  //   .getProfile()
-  //     .then(console.log)
-  // })
-  
+
 
 
 // websocket for instagram stroy
@@ -54,16 +40,8 @@ router.ws('/inscilent',(ws,req)=>{
 router.get('/ins/story',(req,res)=>{
   let userId=req.query.userid
   if(['127.0.0.1:3000','localhost:3000'].includes(req.headers.host)){
-      insCilent.getUserStoryData({userId})
-          .then(res=>{
-          console.log("TCL: res", res)
-            if(res.status==='ok'){
-              res.json(res.data.reels_media)
-            }
-          })
-          .catch(err=>{
-            res.json({msg:err,status:'failed'})
-          })
+     //这里写爬虫
+    res.json(mockData)
   }else{
     res.json({msg:'Invalid request.',status:'failed'})
   }

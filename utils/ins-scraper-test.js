@@ -32,10 +32,11 @@ async function test2(){
   const reelsFeed = ig.feed.reelsMedia({ // working with reels media feed (stories feed)
     userIds: [targetUser.pk], // you can specify multiple user id's, "pk" param is user id
   });
+  const storyItems = await reelsFeed.items();
   console.log("TCL: reelsFeed", reelsFeed)
+  console.log("-----------------------------------------")
+  console.log("TCL: reelsFeed",JSON.stringify(storyItems))
 }
-  
-// test2()
 
 // async function getStoryWithoutLogin(){
 //   let variables={
@@ -71,3 +72,11 @@ async function test2(){
     }
     getFollowers()
   */
+
+const mockData=require('./storymock')
+mockData.forEach(item=>{
+  console.log(item.media_type)
+})
+
+
+
