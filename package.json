@@ -40,6 +40,6 @@
     "nodemon": "^1.18.9"
   },
   "browserslist": [
-    "cover 99.5%"
+    "since 2016"
   ]
 }
