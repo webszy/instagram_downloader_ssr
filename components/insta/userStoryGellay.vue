@@ -1,12 +1,19 @@
 <template>
   <div class='story'>
-    <div  v-for="(k,i) in storyMedia.items" :key=i :class="getItemIndex(i)">
+    <div  v-for="(k,i) in storyMedia" :key=i :class="getItemIndex(i)">
        <video-player 
+        v-if="k.media_type==2"
         title=''
         :src=getSrc(k)
         :fileName="getFileName(k)"
         :postImg=k.image_versions2.candidates[0].url
        />
+        <picture-item 
+        title=''
+        :src=k.image_versions2.candidates[0].url
+        :fileName="getFileName(k)"
+        v-else 
+        />
     </div> 
     <div class="empty" v-show="storyMedia.length==0">Nothing of story</div>
   </div>
@@ -37,7 +44,7 @@ mounted(){
 methods:{
     getFileName(k){
       let username=this.$route.params.name || ''
-      return username+'_Story_'+k.taken_at_timestamp
+      return username+'_Story_'+k.taken_at
     },
     getItemIndex(i){
       let str='item ',
@@ -61,7 +68,7 @@ methods:{
       if(!item.video_versions){
         return ''
       }else{
-        return k.video_versions[0].url
+        return item.video_versions[0].url
       }
     }
  },
@@ -112,4 +119,14 @@ computed:{
  .story .video-js .vjs-tech{
    height: 50%;
  }
+
+ .story   .video  video[poster]{
+    object-fit: contain;
+}
+ .story  .video  .vjs-poster {
+    background-size: contain;
+    background-position-y: inherit;
+    background-position-x: center;
+    background-size: 80% 100%;
+}
 </style>
