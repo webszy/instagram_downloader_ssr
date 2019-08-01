@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/ins/story',async(req,res)=>{
   let userId=req.query.userId
-  if(['127.0.0.1:3000','localhost:3000'].includes(req.headers.host)){
+  if(['127.0.0.1:3000','localhost:3000','192.168.1.70:3000'].includes(req.headers.host)){
     //这里写爬虫
     try {
       let reelsFeed = await insCilent.feed.reelsMedia({ // working with reels media feed (stories feed)

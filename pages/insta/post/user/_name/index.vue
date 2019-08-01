@@ -44,7 +44,6 @@ import {
 import userPostGellay from '@/components/insta/userPostGellay'
 import userStoryGellay from '@/components/insta/userStoryGellay'
 import sFooter from '@/components/footer'
-import { mapMutations,mapGetters } from 'vuex'
 import loading from '@/components/loading'
 import searchBar from '@/components/searchBar'
 const mockData=require('@/utils/storymock')
@@ -64,9 +63,9 @@ export default {
     userId:'',
     showLoading:false,
     is_private:false,
-     routerPath:{
-        Instagram:'insta'
-      },
+    routerPath:{
+      Instagram:'insta'
+    },
       storyMedia:mockData
     }
   },
@@ -80,7 +79,6 @@ export default {
     })
   },
   methods:{
-    ...mapMutations(['setProfile']),
     goNextPage(){},
     getUserProfile(){
       getUserBaseInfo(this.username)
@@ -137,6 +135,13 @@ export default {
       getUserStoriesByLogin(this.userId)
       .then(res=>{
         console.log("TCL: getUserStoryData -> res", res)
+        if(res.status&&res.status=='failed'){
+          this.storyMedia=[]
+        }
+        res.forEach(item=>{
+          let expire=new Date(item.taken_at*1000),now=new Date().getTime()
+          console.log(`上传时间：${expire.getMonth()+1}-${expire.getDate()} ${expire.getHours()}:${expire.getMinutes()}`)
+        })
         this.storyMedia=res
         this.$nextTick(()=>{
          this.showLoading=false
@@ -181,7 +186,6 @@ export default {
     loadMoreStory(){}
   },
   computed:{
-    ...mapGetters(['profile'])
   }
 }
 </script>

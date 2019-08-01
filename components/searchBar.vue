@@ -27,7 +27,6 @@
 import {getInsSearchResult} from '../utils/request'
 export default {
 name:'searchBar',
-components:{},
 data(){
 return {
    platform:'Instagram',

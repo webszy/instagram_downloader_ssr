@@ -7,7 +7,7 @@
      <nav><a href="https://insanalysis.vip" title="analysis your instagram account">&nbsp;insAnalysis</a></nav>
    </section>
    <section>
-     Copyright &copy; 2019 Instagram Downloader. All right reserved
+     Copyright &copy; 2019 saveMedia.vip All right reserved
    </section>
  </footer>
 </template>

@@ -1,21 +1,23 @@
 <template>
-  <div class='story'>
-    <div  v-for="(k,i) in storyMedia" :key=i :class="getItemIndex(i)">
-       <video-player 
-        v-if="k.media_type==2"
-        title=''
-        :src=getSrc(k)
-        :fileName="getFileName(k)"
-        :postImg=k.image_versions2.candidates[0].url
-       />
-        <picture-item 
-        title=''
-        :src=k.image_versions2.candidates[0].url
-        :fileName="getFileName(k)"
-        v-else 
+  <div class='story' :style="getBoxWidth">
+    <div v-if=storyMedia.length class="storyBox" :style="getBoxWidth">
+      <div  v-for="(k,i) in storyMedia" :key=i :class="getItemIndex(i)">
+        <video-player 
+          v-if="k.media_type==2"
+          title=''
+          :src=getVideoSrc(k)
+          :fileName="getFileName(k)"
+          :postImg=k.image_versions2.candidates[0].url
         />
-    </div> 
-    <div class="empty" v-show="storyMedia.length==0">Nothing of story</div>
+          <picture-item 
+          title=''
+          :src=getImgSrc(k)
+          :fileName="getFileName(k)"
+          v-else 
+          />
+      </div> 
+    </div>
+    <div class="empty" v-else>the story is empty</div>
   </div>
 </template>
 
@@ -29,7 +31,7 @@ name:'userStoryGellay',
 components:{pictureItem,videoPlayer},
 data(){
 return {
-
+  lineNum:4
   }
  },
 props:{
@@ -47,54 +49,68 @@ methods:{
       return username+'_Story_'+k.taken_at
     },
     getItemIndex(i){
-      let str='item ',
-      num=4,
+     let str='item ',
       w=document.body.clientWidth||window.screen.width
-
       if(w<=1300){
-        num=3
+        this.lineNum=3
       }
 
-      if(i%num===0){
+      if(i%this.lineNum===0){
         str+='itemFirst'
-      }else if(i%num===(num-1)){
+      }else if(i%this.lineNum===this.lineNum-1){
         str+='itemLast'
       }else{
         str+=''
-      }
+      }      
       return str
     },
-    getSrc(item){
+    getVideoSrc(item){
       if(!item.video_versions){
         return ''
       }else{
         return item.video_versions[0].url
       }
+    },
+    getImgSrc(item){
+      if(!item.image_versions2){
+        return ''
+      }else{
+        return item.image_versions2.candidates[0].url
+      }
     }
  },
 computed:{
-  
+  getBoxWidth(){
+    let width
+    if(this.lineNum===3){
+      width = (3*240+2*30)
+    }else{
+      width = (4*300+3*30)
+    }
+    return `width:${width}px`
+  }
 }
 }
 </script>
 <style>
 .story{
-  width: 100%;
-  /* margin: 0 auto; */
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  padding: 0 13.54%;
+  margin: 0 auto;
+  /* padding: 0 13.54%; */
   padding-top: 52px;
   box-sizing: border-box;
   
 }
-
+.story .storyBox{
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
 .story .item{
   width: 300px;
   height: 300px;
   /* margin: auto; */
-  margin-right: 3.49%;
+  margin-right: 30px;
   margin-bottom: 60px;
 }
 .story .itemFirst{
@@ -111,7 +127,7 @@ computed:{
   margin-right:0;
 } */
 .story .video .video-js .vjs-big-play-button{
-  top: 25%;
+  top: 40%;
 }
  .story .video video{
   object-fit: cover; 
