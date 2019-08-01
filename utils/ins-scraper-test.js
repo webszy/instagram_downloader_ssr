@@ -23,11 +23,12 @@ async function test2(){
   console.log("-----------------------------------------")
   console.log("TCL: reelsFeed",JSON.stringify(storyItems))
 }
+test2()
 
-const mockData=require('./storymock')
-mockData.forEach(item=>{
-  console.log(item.media_type)
-})
+// const mockData=require('./storymock')
+// mockData.forEach(item=>{
+//   console.log(item.media_type)
+// })
 
 
 

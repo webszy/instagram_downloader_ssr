@@ -1,70 +1,77 @@
 const express = require('express');
 const router = express.Router();
-const mockData=require('../utils/storymock')
-const rp=require('request-promise')
+const {IgApiClient}=require('instagram-private-api')
+
+/* create a insCilent then login by a defualt username*/ 
+let insCilent
+const createInsCilent= async(username,password) =>{
+  insCilent=null
+  insCilent = new IgApiClient();
+  insCilent.state.generateDevice(username);
+  if(process.env.NODE_ENV==='development'){
+    insCilent.state.proxyUrl = 'http://127.0.0.1:7890'
+  }
+  await insCilent.simulate.preLoginFlow();
+  const auth = await insCilent.account.login(username, password)
+}
+createInsCilent('opgpstypd', '147258')
+// 获取await错误信息
+
+/* routers */
 router.get('/', function(req, res, next) {
   res.send(' Priavte Data Provider for Webszy')
 });
 
-
-
-
-// websocket for instagram stroy
-/*
-router.ws('/inscilent',(ws,req)=>{
-    ws.send('connect successfully')
-    ws.on('message', msg=>{
-      if(['127.0.0.1:3000','localhost:3000','http://www.websocket-test.com'].includes(req.headers.origin)){
-        let params=JSON.parse(msg)
-        if(params.type='story'){
-          insCilent.getUserStoryData({username:params.username})
-          .then(res=>{
-            if(res.status==='ok'){
-              ws.send(JSON.stringify(res.data.reels_media))
-            }
-          })
-          .catch(err=>{
-              ws.send({msg:err,status:'failed'})
-          })
-          
-        }else{
-          ws.send({msg:'Invalid params.',status:'failed'})
-        }
-        
-      }else{
-        ws.send({msg:'Invalid request.',status:'failed'})
-      }
-     
-    })
-})*/
-router.get('/ins/story',(req,res)=>{
-  let userId=req.query.userid
+router.get('/ins/story',async(req,res)=>{
+  let userId=req.query.userId
   if(['127.0.0.1:3000','localhost:3000'].includes(req.headers.host)){
-     //这里写爬虫
-    res.json(mockData)
+    //这里写爬虫
+    try {
+      let reelsFeed = await insCilent.feed.reelsMedia({ // working with reels media feed (stories feed)
+        userIds: [userId], // you can specify multiple user id's, "pk" param is user id
+      })
+      let storyItems = await reelsFeed.items();
+      res.json(storyItems)
+    } catch (err) {
+      console.log("TCL: err", err)
+      res.json([])
+    }  
   }else{
     res.json({msg:'Invalid request.',status:'failed'})
   }
 })
-router.get('/ins/story2',(req,res)=>{
-  let userName=req.query.username
-  rp.get('https://api.storiesig.com/stories/'+userName,{
-    resolveWithFullResponse: true,
-    headers:{
-      origin:'https://storiesig.com'
+router.put('/ins/changeUser',(req,res)=>{
+   let username=req.query.username,
+       password=req.query.password,
+       key=req.query.key
+    if(key!=='gpower'||username===undefined||password===undefined){
+      res.json({
+        err:'Invalid Parameters'
+      })
+    }else{
+      let msg,err
+      try {
+        createInsCilent(username,password)
+        msg='ok'
+        err=''
+      } catch (error) {
+        msg='failed'
+        err=error
+      }
+      res.json({msg,err})
     }
-  })
-  .then(res2=>{
-    res.json(JSON.parse(res2.body))
-  })
 })
-// 获取某个帖子的详细信息
-/*
-router.get('/ins/detail',async (req,res)=>{
-  let shortcode=req.query.shortcode
-  console.log("TCL: shortcode", shortcode)
-  let data= await inScraper.getSingleImageInfo(shortcode)
-  res.json(data)
-})
-*/
+// router.get('/ins/story2',(req,res)=>{
+//   let userName=req.query.username
+//   rp.get('https://api.storiesig.com/stories/'+userName,{
+//     resolveWithFullResponse: true,
+//     headers:{
+//       origin:'https://storiesig.com'
+//     }
+//   })
+//   .then(res2=>{
+//     res.json(JSON.parse(res2.body))
+//   })
+// })
+
 module.exports = router;
