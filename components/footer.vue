@@ -1,7 +1,7 @@
 <template>
  <footer class="footer">
    <section class="navs">
-     <nav><a href="javascript:;">Contact |</a></nav>
+     <nav><a href="mailto:igservicepromotion@gmail.com" title="Contact us by Email">Contact |</a></nav>
      <nav><a href="https://gainfollow.vip" title="easy to get Followers">&nbsp;GainFollow |</a></nav>
      <nav><a href="https://morelikes.vip" title="Most Simple Way to Get Likes">&nbsp;MoreLikes |</a></nav>
      <nav><a href="https://insanalysis.vip" title="analysis your instagram account">&nbsp;insAnalysis</a></nav>
