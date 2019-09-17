@@ -32,13 +32,17 @@ module.exports = {
   */
   css: [
     './assets/css/reset.css',
-    'element-ui/lib/theme-chalk/index.css'
+    'element-ui/lib/theme-chalk/index.css',
+    'video.js/dist/video-js.css',
+    './assets/css/common.css',
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/videopPlayer',
+    '@/plugins/fileSaver'
   ],
   /*
   ** Nuxt.js modules

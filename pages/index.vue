@@ -3,49 +3,55 @@
     <section class="top">
       <h1>{{platform}}</h1>
       <h2>Media Download</h2>
-      <el-input v-model="inputVal" placeholder="username/tag or URL" @keydown.enter="goSearching">
-        <button slot="suffix" class="search" @click="goSearching">search</button>
-      </el-input>
-      <img src="../assets/images/instagram_image@2x.png" >
-      <img src="../assets/images/instagram_image@2x.png" >
+
+      <searchBar></searchBar>
+
+      <img class="leftbg" src="../assets/images/instagram_image@2x.png" >
+      <img class="rightbg" src="../assets/images/instagram_image@2x.png" >
     </section>
-   
     <article class="card">
-      <img src="../assets/images/advantages.png">
-      <h3>Advantages</h3>
-      <p>No need to log in, truly anonymous, no need to login, no private data collected.One button smart, simple, easy and convenient.</p>
-    </article>
-     <article class="card">
       <img src="../assets/images/use.png">
       <h3>How to use</h3>
       <p>Enter your username or post link and then click the search button to download the video, image and story data.</p>
     </article>
     <article class="card">
+      <img src="../assets/images/advantages.png">
+      <h3>Advantages</h3>
+      <p>No need to log in, truly anonymous, no need to login, no private data collected.One button smart, simple, easy and convenient.</p>
+    </article>  
+    <article class="card">
       <img src="../assets/images/privacy.png">
       <h3>Privacy Policy</h3>
       <p>We don't affiliate with Instagram or host any of the Instagram's Stories on this website.All rights belong to the each account owners.</p>
     </article>
+    <s-footer/>
   </div>
 </template>
 
 <script>
-
+import sFooter from '../components/footer'
+import searchBar from '../components/searchBar'
+import {
+  getInsSearchResult
+}from '../utils/request'
 export default {
   name:'HomePage',
   components: {
-    
+    sFooter,
+    searchBar
   },
   data(){
     return{
-      platform:'instagram',
-      inputVal:''
+      platform:'Instagram',
+      inputVal:'',
+      routerPath:{
+        Instagram:'insta'
+      }
     }
     
   },
   methods:{
-    goSearching(){
-      console.log(this.inputVal)
-    }
+   
   }
 }
 </script>
@@ -55,6 +61,7 @@ export default {
 .home{
  width: 100%;
  height: 100%;
+
 }
 .home .top{
   width: 100%;
@@ -84,54 +91,9 @@ export default {
 .home .top h2{
   color:#00FFFA;
 }
-.home .el-input{
-  width: 41.67%;
-  height: 100px;
-  position: relative;
-}
-.home .el-input input{
-  width: 100%;
-  height: 100%;
-  border-radius: 68px;
-  padding-left: 42px;
-  box-sizing: border-box;
-  font-size: 24px;
-  font-family: Arial, Helvetica, sans-serif;
-  color:#AEAEAE;
-}
-.home .el-input input::placeholder{
-  color:#CFCFCF !important;
-  font-size: 24px;
-  opacity: 1;
-  padding: 1px;
-  line-height: 200%;
-}
-.home .el-input  .el-input__suffix{
-  display: block;
-  width:22.75%;
-  height:85%;
-  position: absolute;
-  right: 9px;
-  top:50%;
-}
-.home .el-input  .el-input__suffix-inner{
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.home .search{
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform: translateY(-50%);
-  background:linear-gradient(360deg,#EB6A81 0%,#FFC640 100%);
-  border-radius:68px;
-  font-size:36px;
-  font-family: 'Lalezar', cursive;
-  font-weight:400;
-  color:#fff;
-}
-.home .top img{
+
+.home .top .leftbg,
+.home .top .rightbg{
   display: block;
   width: 380px;
   height: 380px;
@@ -140,15 +102,18 @@ export default {
   bottom: 12px;
   transform: rotateZ(5deg);
 }
-.home .top img:last-of-type{
+.home .top .rightbg{
   right: 80px;
   bottom: 12px;
   left: auto;
   transform:rotateY(180deg) rotateZ(264deg);
 }
 .home .card{
-  width:420px;
-  height:480px;
+  width:21.88%;
+  /* height:480px; */
+  height: 72.8%;
+  max-width: 420px;
+  max-height: 480px;
   background:#fff;
   box-shadow:6px 50px 55px 0px rgba(225,222,241,0.4);
   border-radius:30px;
@@ -160,22 +125,22 @@ export default {
   padding-top:50px; 
   z-index: 1;
   position: absolute;
-  left: 260px;
+  left: 13.45%;
   top:741px;
 }
-.home .card:nth-child(2){
+.home .card:nth-of-type(2){
   left: 50%;
   top:805px;
   transform: translateX(-50%);
 }
-.home .card:last-child{
+.home .card:last-of-type{
   left: auto;
-  right: 258px;
+  right: 13.43%;
 }
 .home .card img{
   display: block;
-  width: 41.43%;
-  height: 40.47%;
+  width: 174px;
+  height: 174px;
   margin-bottom: 16px;
 }
 .home .card h3{
@@ -188,11 +153,45 @@ export default {
   line-height:56px;
 }
 .home .card p{
-width:88.1%;
-font-size:22px;
-font-family: Arial, Helvetica, sans-serif;
-color:rgba(94,89,118,1);
-line-height:30px;
+  width:88.1%;
+  font-size:22px;
+  font-family: Arial, Helvetica, sans-serif;
+  color:rgba(94,89,118,1);
+  line-height:30px;
+}
+@media screen and (max-width:1300px){
+  .home .top{
+    padding-top: 154px;
+  }
+  .home .card{
+    width: 336px;
+    height: 384px;
+    padding-top: 40px;
+    left:6.45%;
+    top:640px;
+  }
+  .home .card:nth-of-type(2){
+    top:704px;
+  }
+  .home .card:last-of-type{
+    right: 6.45%;
+  }
+  .home .card img{
+    width: 139px;
+    height: 139px;
+  }
+  .home .card h3{
+    font-size: 28px;
+    height: 48px;
+    line-height: 48px;
+  }
+  .home .card p{
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .searchBar .el-input{
+
+  }
 }
 
 </style>
